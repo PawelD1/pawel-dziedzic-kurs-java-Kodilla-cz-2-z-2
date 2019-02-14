@@ -29,4 +29,6 @@ public class DbService {
     public Task getTask(final Long id) {
         return repository.findOne(id);
     }
+
+    public void delete(final Long id) {repository.delete(id);}
 }
