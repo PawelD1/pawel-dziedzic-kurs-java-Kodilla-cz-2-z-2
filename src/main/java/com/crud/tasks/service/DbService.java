@@ -10,23 +10,23 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class DbService
-{
+public class DbService {
     @Autowired
     private TaskRepository repository;
-    public List<Task> getAllTAsks(){
+
+    public List<Task> getAllTAsks() {
         return repository.findAll();
     }
-    public Task getTaskById(final Long id)
-    {
-        return repository.findById(id).orElse(null);
+
+    public Task getTaskById(final Long id) {
+        return repository.findOne(id);
     }
-    public Task saveTask(final Task task){
+
+    public Task saveTask(final Task task) {
         return repository.save(task);
     }
 
-    public Optional<Task> getTask(final Long id)
-    {
-        return repository.findById(id);
+    public Task getTask(final Long id) {
+        return repository.findOne(id);
     }
 }
