@@ -31,12 +31,6 @@ public class TaskMapper
                 .map(t->new TaskDto(t.getId(), t.getTitle(), t.getContent()))
                 .collect(Collectors.toList());
     }
-    public void mapToTaskDtoListRemove(final List<Task> taskList, final int id)
-    {
-        taskList.stream()
-                .collect(Collectors.toList())
-                .remove(taskList.get(id));
 
-    }
 
 }
