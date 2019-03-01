@@ -1,5 +1,6 @@
 package com.crud.tasks.service;
 
+import com.crud.tasks.controller.TaskNotFoundException;
 import com.crud.tasks.domain.Task;
 import com.crud.tasks.repository.TaskRepository;
 import com.crud.tasks.repository.TaskRepository;
@@ -26,7 +27,7 @@ public class DbService {
         return repository.save(task);
     }
 
-    public Task getTask(final Long id) {
+    public Task getTask(final Long id) throws TaskNotFoundException {
         return repository.findOne(id);
     }
 
