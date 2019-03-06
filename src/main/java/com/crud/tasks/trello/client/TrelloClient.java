@@ -44,7 +44,7 @@ public class TrelloClient {
                 final Optional<TrelloBoardDto> board = Optional.of(boardsResponse[i]);
                 return Arrays.asList(boardsResponse);
             }
-            return new ArrayList<>();
+
 
         }
         return new ArrayList<>();
