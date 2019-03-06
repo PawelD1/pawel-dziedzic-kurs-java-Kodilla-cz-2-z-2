@@ -24,10 +24,10 @@ public class CreatedTelloCard {
     @JsonProperty("shortUrl")
     private String shortUrl;
 
-    @JsonProperty("badges")
-    private BadgesDto badges;
-    public CreatedTelloCard createNewCard(TrelloCardDto trelloCardDto)
-    {
-        URI url= UriComponentsBuilder.fromHttpUrl(trelloApiEndpoint+"/cards")
-    }
+   // @JsonProperty("badges")
+//    private BadgesDto badges;
+//    public CreatedTelloCard createNewCard(TrelloCardDto trelloCardDto)
+//    {
+//        URI url= UriComponentsBuilder.fromHttpUrl(trelloApiEndpoint+"/cards")
+//    }
 }
