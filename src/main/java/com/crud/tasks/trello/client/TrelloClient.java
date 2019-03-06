@@ -15,6 +15,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
+import static java.util.Optional.ofNullable;
+
 @Component
 public class TrelloClient {
     @Value("${trello.api.endpoint.prod}")
@@ -37,31 +39,21 @@ public class TrelloClient {
 
 
         TrelloBoardDto[] boardsResponse = restTemplate.getForObject(url, TrelloBoardDto[].class);
-        int length = boardsResponse.length;
-
-        for (int i = 0; i < length; i++) {
-            if (Optional.ofNullable(boardsResponse[i]).isPresent()) {
-                final Optional<TrelloBoardDto> board = Optional.of(boardsResponse[i]);
-                return Arrays.asList(boardsResponse);
-            }
-
-
-        }
-        return new ArrayList<>();
-
+        return Arrays.asList(ofNullable(boardsResponse).orElse(new TrelloBoardDto[0]));
     }
+
 
     public List<TrelloBoardDto> getTrelloBoardsPublic() {
         return getTrelloBoards();
     }
-    public CreatedTrelloCard createNewCard(TrelloCardDto trelloCardDto)
-    {
-        URI url= UriComponentsBuilder.fromHttpUrl(trelloApiEndpoint+"/cards")
+
+    public CreatedTrelloCard createNewCard(TrelloCardDto trelloCardDto) {
+        URI url = UriComponentsBuilder.fromHttpUrl(trelloApiEndpoint + "/cards")
                 .queryParam("key", trelloAppKey)
                 .queryParam("token", trelloToken)
                 .queryParam("name", trelloCardDto.getName())
-                .queryParam("desc",trelloCardDto.getDescription())
-                .queryParam("post",trelloCardDto.getPost())
+                .queryParam("desc", trelloCardDto.getDescription())
+                .queryParam("post", trelloCardDto.getPost())
                 .queryParam("idList", trelloCardDto.getListId()).build().encode().toUri();
         return restTemplate.postForObject(url, null, CreatedTrelloCard.class);
     }
