@@ -7,7 +7,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import javax.swing.text.html.Option;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -22,7 +21,7 @@ public class TrelloClient {
     private String trelloAppKey;
     @Value("${trello.app.token}")
     private String trelloToken;
-    @Value("pawedziedzic2")
+    @Value("${trello.app.username}")
     private String trelloUsername;
     @Autowired
     private RestTemplate restTemplate;
@@ -31,25 +30,23 @@ public class TrelloClient {
         URI url = UriComponentsBuilder.fromHttpUrl(trelloApiEndpoint + "/members/pawedziedzic2/boards")
                 .queryParam("key", trelloAppKey)
                 .queryParam("token", trelloToken)
-                .queryParam("fields", "name,id").build().encode().toUri();
+                .queryParam("fields", "name,id")
+                .queryParam("lists", "all").build().encode().toUri();
+
 
         TrelloBoardDto[] boardsResponse = restTemplate.getForObject(url, TrelloBoardDto[].class);
-        ;
         int length = boardsResponse.length;
-        for (int i = 0; i < length; i++) {
-            final Optional<TrelloBoardDto> board = Optional.ofNullable(boardsResponse[i]);
-            if (board.isPresent()) {
+        try {
+            for (int i = 0; i < length; i++) {
+                final Optional<TrelloBoardDto> board = Optional.of(boardsResponse[i]);
                 return Arrays.asList(boardsResponse);
             }
+            return new ArrayList<>();
 
+        } catch (NullPointerException e) {
+
+            throw new NullPointerException();
         }
-        return new ArrayList<>();
-//        if (boardsResponse != null) {
-//            return Arrays.asList(boardsResponse);
-//        }
-//        return new ArrayList<>();
-
-        //TrelloBoardDto[] boardsResponse=restTemplate.getForObject(trelloApiEndpoint+"/members/pawedziedzic2/boards"+"?key="+trelloAppKey+"&token="+trelloToken, TrelloBoardDto[].class);
     }
 
     public List<TrelloBoardDto> getTrelloBoardsPublic() {
