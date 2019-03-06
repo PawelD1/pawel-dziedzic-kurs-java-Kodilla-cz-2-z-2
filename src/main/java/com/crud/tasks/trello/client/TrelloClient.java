@@ -1,6 +1,6 @@
 package com.crud.tasks.trello.client;
 
-import com.crud.tasks.domain.CreateTelloCard;
+import com.crud.tasks.domain.CreatedTrelloCard;
 import com.crud.tasks.domain.TrelloBoardDto;
 import com.crud.tasks.domain.TrelloCardDto;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,7 +54,7 @@ public class TrelloClient {
     public List<TrelloBoardDto> getTrelloBoardsPublic() {
         return getTrelloBoards();
     }
-    public CreateTelloCard createNewCard(TrelloCardDto trelloCardDto)
+    public CreatedTrelloCard createNewCard(TrelloCardDto trelloCardDto)
     {
         URI url= UriComponentsBuilder.fromHttpUrl(trelloApiEndpoint+"/cards")
                 .queryParam("key", trelloAppKey)
@@ -63,7 +63,7 @@ public class TrelloClient {
                 .queryParam("desc",trelloCardDto.getDescription())
                 .queryParam("post",trelloCardDto.getPost())
                 .queryParam("idList", trelloCardDto.getListId()).build().encode().toUri();
-        return restTemplate.postForObject(url, null, CreateTelloCard.class);
+        return restTemplate.postForObject(url, null, CreatedTrelloCard.class);
     }
 
 }

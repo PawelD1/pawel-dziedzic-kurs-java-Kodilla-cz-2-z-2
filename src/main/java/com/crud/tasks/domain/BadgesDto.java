@@ -5,26 +5,19 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.springframework.web.util.UriComponentsBuilder;
 
-import java.net.URI;
+import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @JsonIgnoreProperties(ignoreUnknown = true)
 
-public class CreateTelloCard {
+public class BadgesDto {
     @JsonProperty("id")
-    private String id;
-
-    @JsonProperty("name")
-    private String name;
-
-    @JsonProperty("shortUrl")
-    private String shortUrl;
-
-    //@JsonProperty("badges")
-   // private BadgesDto badges;
-
+    private int id;
+    @JsonProperty("votes")
+    private int votes;
+    @JsonProperty("attachmentsByType")
+    private List<AttachmentsByType> attachments;
 }

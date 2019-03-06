@@ -1,6 +1,6 @@
 package com.crud.tasks.controller;
 
-import com.crud.tasks.domain.CreateTelloCard;
+import com.crud.tasks.domain.CreatedTrelloCard;
 import com.crud.tasks.domain.TrelloBoardDto;
 import com.crud.tasks.domain.TrelloCardDto;
 import com.crud.tasks.trello.client.TrelloClient;
@@ -35,7 +35,7 @@ public class TrelloController {
                 });
     }
     @RequestMapping(method=RequestMethod.POST, value="createTrelloCard")
-    public CreateTelloCard createTelloCard(@RequestBody TrelloCardDto trelloCardDto)
+    public CreatedTrelloCard createTrelloCard(@RequestBody TrelloCardDto trelloCardDto)
     {
         return trelloClient.createNewCard(trelloCardDto);
     }
