@@ -8,17 +8,17 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.support.SpringBootServletInitializer;
 
 @SpringBootApplication
-public class TasksApplication extends SpringBootServletInitializer {
+public class TasksApplication  {
 
     public static void main(String[] args) throws TaskNotFoundException {
         SpringApplication.run(TasksApplication.class, args);
         //ctrl+alt+L
         //l.ctrl i LPM
     }
-    @Override
-    protected SpringApplicationBuilder configure(SpringApplicationBuilder application)
-    {
-        return application.sources(TasksApplication.class);
-    }
+//    @Override
+//    protected SpringApplicationBuilder configure(SpringApplicationBuilder application)
+//    {
+//        return application.sources(TasksApplication.class);
+//    }
 }
 
