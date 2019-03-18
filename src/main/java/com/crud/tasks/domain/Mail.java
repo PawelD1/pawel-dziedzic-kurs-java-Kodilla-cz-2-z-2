@@ -15,13 +15,10 @@ public class Mail {
     private String mailTo;
     private String subject;
     private String message;
-    private MimeMessage toCc;
+    private String toCc;
 
-    public void setCc() throws MessagingException {
-        toCc.addRecipient(Message.RecipientType.CC, new InternetAddress(mailTo));
-        if (toCc == null)
-            mailTo = null;
 
-    }
+
+
 }
 //https://www.tutorialspoint.com/java/java_sending_email.htm

@@ -24,14 +24,14 @@ public class EmailScheduler {
             simpleEmailService.send(new Mail(
                     adminConfig.getAdminMail(),
                     SUBJECT,
-                    "Currently in database you got: " + size + " task")
+                    "Currently in database you got: " + size + " task","")
             );
 
         } else {
             simpleEmailService.send(new Mail(
                     adminConfig.getAdminMail(),
                     SUBJECT,
-                    "Currently in database you got: " + size + " tasks")
+                    "Currently in database you got: " + size + " tasks","")
             );
         }
     }

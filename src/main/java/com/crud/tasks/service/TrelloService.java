@@ -13,6 +13,7 @@ import javax.mail.internet.MimeMessage;
 import javax.smartcardio.Card;
 import java.util.List;
 
+import static java.util.Optional.ofNullable;
 import static sun.security.x509.X509CertInfo.SUBJECT;
 
 @Service
@@ -32,7 +33,7 @@ public class TrelloService {
     public CreatedTrelloCard createdTrelloCard(final TrelloCardDto trelloCardDto)
     {
         CreatedTrelloCard newCard=trelloClient.createNewCard(trelloCardDto);
-        ofNullable(new Card).ifPresent(card->emailService.send(new Mail(adminConfig.getAdminMail(), SUBJECT, "New card; "+card.getName()+" has been created on your Trello account",new MimeMessage()));
+        ofNullable(newCard).ifPresent(card->emailService.send(new Mail(adminConfig.getAdminMail(), SUBJECT, "New card; "+card.getName()+" has been created on your Trello account","")));
         return newCard;
 
 

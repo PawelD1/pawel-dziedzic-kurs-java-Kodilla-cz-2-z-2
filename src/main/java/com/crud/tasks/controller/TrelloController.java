@@ -46,12 +46,12 @@ public class TrelloController {
 //    {
 //        return trelloClient.createNewCard(trelloCardDto);
 //    }
-        @RequestMapping(method=RequestMethod.GET, value="getTrelloBoards")
+        @RequestMapping(method=RequestMethod.GET, value="/getTrelloBoards")
     public List<TrelloBoardDto> getTrelloBoards()
     {
         return trelloService.fetchTrelloBoards();
     }
-    @RequestMapping(method=RequestMethod.POST, value="createTrelloCard")
+    @RequestMapping(method=RequestMethod.POST, value="/createTrelloCard")
     public CreatedTrelloCard createTrelloCard(@RequestBody TrelloCardDto trelloCardDto)
     {
         return trelloService.createdTrelloCard(trelloCardDto);
