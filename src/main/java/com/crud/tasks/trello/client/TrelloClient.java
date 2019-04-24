@@ -1,13 +1,12 @@
 package com.crud.tasks.trello.client;
 
+import com.crud.tasks.domain.CreatedTrelloCardDto;
 import com.crud.tasks.trello.config.TrelloConfig;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import com.crud.tasks.domain.CreatedTrelloCard;
+import org.hibernate.annotations.common.util.impl.LoggerFactory;
+import org.jboss.logging.Logger;
 import com.crud.tasks.domain.TrelloBoardDto;
 import com.crud.tasks.domain.TrelloCardDto;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
@@ -30,7 +29,7 @@ public class TrelloClient {
 
     @Autowired
     private RestTemplate restTemplate;
-    private static final Logger LOGGER=LoggerFactory.getLogger(TrelloClient.class);
+    private static final Logger LOGGER= LoggerFactory.logger(TrelloClient.class);
 
     private List<TrelloBoardDto> getTrelloBoards() {
         URI url = UriComponentsBuilder.fromHttpUrl(trelloConfig.getTrelloApiEndpoint() + "/members/pawedziedzic2/boards")
@@ -57,16 +56,16 @@ public class TrelloClient {
         return getTrelloBoards();
     }
 
-    public CreatedTrelloCard createNewCard(TrelloCardDto trelloCardDto) {
+    public CreatedTrelloCardDto createNewCard(TrelloCardDto trelloCardDto) {
         URI url = UriComponentsBuilder.fromHttpUrl(trelloConfig.getTrelloApiEndpoint() + "/cards")
                 .queryParam("key",  trelloConfig.getTrelloAppKey())
                 .queryParam("token", trelloConfig.getTrelloToken())
                 .queryParam("name", trelloCardDto.getName())
                 .queryParam("desc", trelloCardDto.getDescription())
-                .queryParam("pos", trelloCardDto.getPost())
+                .queryParam("pos", trelloCardDto.getPos())
                 .queryParam("idList", trelloCardDto.getListId()).build().encode().toUri();
         System.out.println(url);
-        return restTemplate.postForObject(url, null, CreatedTrelloCard.class);
+        return restTemplate.postForObject(url, null, CreatedTrelloCardDto.class);
     }
 
 }
