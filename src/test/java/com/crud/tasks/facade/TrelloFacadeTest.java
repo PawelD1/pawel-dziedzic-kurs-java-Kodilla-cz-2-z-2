@@ -132,7 +132,7 @@ public class TrelloFacadeTest {
         assertEquals(null, createdTrelloCardDto);
     }
 
-    //SimpleEmail send i tworzenie taskRepository, Logger
+
     @Test
     public void shouldShowGetAllTasks() {
         //Given
@@ -196,3 +196,4 @@ public class TrelloFacadeTest {
         assertFalse(taskRepository.exists(task2.getId()));
     }
 }
+//SimpleEmail send i tworzenie taskRepository, Logger
