@@ -2,25 +2,33 @@ package com.crud.tasks.facade;
 
 import com.crud.tasks.domain.*;
 import com.crud.tasks.mapper.TrelloMapper;
+import com.crud.tasks.repository.TaskRepository;
 import com.crud.tasks.service.TrelloService;
 import com.crud.tasks.trello.facade.TrelloFacade;
 import com.crud.tasks.trello.validator.TrelloValidator;
+import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.mock.mockito.MockBean;
 
 import javax.smartcardio.Card;
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
+import static junit.framework.TestCase.assertTrue;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.mockito.Matchers.anyList;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
+@Transactional
 public class TrelloFacadeTest {
 
     @InjectMocks
@@ -34,6 +42,10 @@ public class TrelloFacadeTest {
 
     @Mock
     private TrelloMapper trelloMapper;
+
+    @MockBean
+    TaskRepository taskRepository;
+
 
     @Test
     public void shouldFetchEmptyList() {
@@ -106,8 +118,8 @@ public class TrelloFacadeTest {
     @Test
     public void shouldFetchEmptyCard() {
         //Given
-        TrelloCard trelloCard=new TrelloCard("card","cardOfTrello","pos1","listId1");
-        TrelloCardDto trelloCardDto=new TrelloCardDto("card","cardOfTrello","pos1","listId1");
+        TrelloCard trelloCard = new TrelloCard("card", "cardOfTrello", "pos1", "listId1");
+        TrelloCardDto trelloCardDto = new TrelloCardDto("card", "cardOfTrello", "pos1", "listId1");
 
         //When
         when(trelloService.createTrelloCard(trelloCardDto)).thenReturn(new CreatedTrelloCardDto());
@@ -116,7 +128,71 @@ public class TrelloFacadeTest {
 
         //Then
 
-        CreatedTrelloCardDto createdTrelloCardDto=trelloFacade.createCard(trelloCardDto);
-        assertEquals(null,createdTrelloCardDto);
+        CreatedTrelloCardDto createdTrelloCardDto = trelloFacade.createCard(trelloCardDto);
+        assertEquals(null, createdTrelloCardDto);
+    }
+
+    //SimpleEmail send i tworzenie taskRepository, Logger
+    @Test
+    public void shouldShowGetAllTasks() {
+        //Given
+        Task task = new Task(1L, "task", "content");
+        Task task2 = new Task(2L, "task2", "content2");
+        List<Task> tasks = new ArrayList<>();
+        tasks.add(task);
+        tasks.add(task2);
+        taskRepository.save(task);
+        taskRepository.save(task2);
+
+        //When
+        List<Task> findTasks = taskRepository.findAll();
+
+        //Then
+        assertEquals(tasks, findTasks);
+    }
+
+    @Test
+    public void shouldShowGetTask() {
+        //Given
+        Task task = new Task(1L, "task", "content");
+        Task task2 = new Task(2L, "task2", "content2");
+        taskRepository.save(task);
+        taskRepository.save(task2);
+
+        //When
+        Task findTask = taskRepository.findOne(task2.getId());
+
+        //Then
+        assertEquals(task2.getId(), findTask.getId());
+    }
+
+    @Test
+    public void shouldShowSaveTask() {
+        //Given
+        Task task = new Task(1L, "task", "content");
+        Task task2 = new Task(2L, "task2", "content2");
+        taskRepository.save(task);
+        taskRepository.save(task2);
+
+        //When && Then
+        assertTrue(taskRepository.exists(task.getId()));
+        assertTrue(taskRepository.exists(task2.getId()));
+    }
+
+    @Test
+    public void shouldDeleteAllTasks() {
+        //Given
+        Task task = new Task(1L, "task", "content");
+        Task task2 = new Task(2L, "task2", "content2");
+        taskRepository.save(task);
+        taskRepository.save(task2);
+
+        //When
+        taskRepository.delete(task.getId());
+        taskRepository.delete(task2.getId());
+
+        //Then
+        assertFalse(taskRepository.exists(task.getId()));
+        assertFalse(taskRepository.exists(task2.getId()));
     }
 }
