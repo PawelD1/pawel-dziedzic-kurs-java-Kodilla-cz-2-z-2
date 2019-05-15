@@ -4,6 +4,10 @@ import lombok.Getter;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDate;
+import java.time.Month;
+import java.util.ArrayList;
+
 @Component
 @Getter
 public class AdminConfig {
@@ -21,4 +25,14 @@ public class AdminConfig {
 
     @Value("${company.email}")
     private String companyEmail;
+
+    public LocalDate sendingEmailDaily(ArrayList<LocalDate> localDates)
+    {
+        for(int i=0;i<localDates.size();i++) {
+            if (localDates.get(i).getDayOfYear() == LocalDate.now().getDayOfYear())
+                return LocalDate.now();
+        }
+        return null;
+
+    }
 }
