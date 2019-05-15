@@ -2,10 +2,10 @@ package com.crud.tasks.config;
 
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
-import java.time.Month;
 import java.util.ArrayList;
 
 @Component
@@ -26,13 +26,9 @@ public class AdminConfig {
     @Value("${company.email}")
     private String companyEmail;
 
+   @Scheduled(cron="0 0 12 * * *")
     public LocalDate sendingEmailDaily(ArrayList<LocalDate> localDates)
     {
-        for(int i=0;i<localDates.size();i++) {
-            if (localDates.get(i).getDayOfYear() == LocalDate.now().getDayOfYear())
-                return LocalDate.now();
-        }
-        return null;
-
+        return LocalDate.now();
     }
 }
