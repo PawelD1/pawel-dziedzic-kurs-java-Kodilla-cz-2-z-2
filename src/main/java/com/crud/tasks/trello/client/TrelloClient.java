@@ -31,7 +31,7 @@ public class TrelloClient {
     private RestTemplate restTemplate;
     private static final Logger LOGGER= LoggerFactory.logger(TrelloClient.class);
 
-    private List<TrelloBoardDto> getTrelloBoards() {
+    public List<TrelloBoardDto> getTrelloBoards() {
         URI url = UriComponentsBuilder.fromHttpUrl(trelloConfig.getTrelloApiEndpoint() + "/members/pawedziedzic2/boards")
                 .queryParam("key", trelloConfig.getTrelloAppKey())
                 .queryParam("token", trelloConfig.getTrelloToken())
