@@ -31,8 +31,10 @@ repositories {
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	
 	compile group: 'org.projectlombok', name: 'lombok', version: '1.18.4'
 	compile('org.springframework.boot:spring-boot-starter-web')
+	compile 'javax.mail:mail:1.4.7'
 	compile('org.projectlombok:lombok')
 	compile ('org.springframework.boot:spring-boot-starter-data-jpa')
 	compile('mysql:mysql-connector-java')

@@ -2,6 +2,7 @@ package com.crud.tasks.service;
 
 import com.crud.tasks.config.AdminConfig;
 import com.crud.tasks.domain.Mail;
+import com.crud.tasks.domain.Task;
 import com.crud.tasks.repository.TaskRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -60,14 +61,32 @@ public class MailCreatorService {
         return templateEngine.process("mail/created-trello-card-mail", context);
     }
 
-    @Scheduled(cron = "0 0 12 * * *")
-    public void sendingEmailDaily() {
-        long size = taskRepository.count();
-        simpleEmailService.send(new Mail(
-                adminConfig.getAdminMail(),
-                "Automatic message",
-                "Currently in database you got: " + size + "tasks",
-                "")
-        );
+    public String buildTasksDailyEmail(String message) {
+
+        List<Task> tasksList = taskRepository.findAll();
+        Context context = new Context();
+        context.setVariable("message", message);
+        context.setVariable("tasks_url", "http://localhost:63342/tasks");
+        context.setVariable("button", "Visit website");
+        context.setVariable("admin_name", adminConfig.getAdminName());
+        context.setVariable("admin_mail", adminConfig.getAdminMail());
+        context.setVariable("companyName", adminConfig.getCompanyName());
+        context.setVariable("companyEmail", adminConfig.getCompanyEmail());
+        context.setVariable("show_button", false);
+        context.setVariable("is_friend", false);
+        context.setVariable("admin_config", adminConfig);
+        context.setVariable("tasks_list", tasksList);
+        return templateEngine.process("mail/daily-tasks-summary-mail", context);
     }
+
+//    @Scheduled(cron = "0 0 12 * * *")
+//    public void sendingEmailDaily() {
+//        long size = taskRepository.count();
+//        simpleEmailService.send(new Mail(
+//                adminConfig.getAdminMail(),
+//                "Automatic message",
+//                "Currently in database you got: " + size + "tasks",
+//                "")
+//        );
+//    }
 }

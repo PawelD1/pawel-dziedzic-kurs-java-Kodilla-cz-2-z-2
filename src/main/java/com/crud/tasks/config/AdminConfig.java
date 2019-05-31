@@ -10,8 +10,6 @@ import org.springframework.stereotype.Component;
 @Getter
 public class AdminConfig {
 
-    @Autowired
-    TaskRepository taskRepository;
     @Value("${admin.mail}")
     private String adminMail;
 

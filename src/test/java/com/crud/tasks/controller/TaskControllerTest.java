@@ -54,6 +54,23 @@ public class TaskControllerTest {
         when(taskMapper.mapToTaskDto(any())).thenReturn(taskDto);
 
         //When & Then
+        mockMvc.perform(get("/v1/task/getTaskById").param("taskId","1").contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id", is(1)))
+                .andExpect(jsonPath("$.title", is("taskOne")))
+                .andExpect(jsonPath("$.content", is("content")));
+    }
+
+    @Test
+    public void shouldGetTask() throws Exception {
+        //Given
+        Task task = new Task(1L, "taskOne", "content");
+        TaskDto taskDto = new TaskDto(1L, "taskOne", "content");
+        //taskRepository.save(task);
+        when(dbService.getTask(any())).thenReturn(task);
+        when(taskMapper.mapToTaskDto(any())).thenReturn(taskDto);
+
+        //When & Then
         mockMvc.perform(get("/v1/task/getTask").param("taskId","1").contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id", is(1)))
@@ -74,7 +91,7 @@ public class TaskControllerTest {
         when(taskMapper.mapToTaskDtoList(any())).thenReturn(dtoList);
 
         //When & Then
-        mockMvc.perform(get("/v1/task/getTasks").contentType(MediaType.APPLICATION_JSON))
+        mockMvc.perform(get("/v1/getTasks").contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(1)))
                 .andExpect(jsonPath("$[0].id", is(1)))

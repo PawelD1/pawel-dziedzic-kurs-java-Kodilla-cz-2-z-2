@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 import static java.util.Optional.ofNullable;
-import static sun.security.x509.X509CertInfo.SUBJECT;
 
 @Service
 public class TrelloService {
@@ -22,6 +21,8 @@ public class TrelloService {
     private TrelloClient trelloClient;
     @Autowired
     private SimpleEmailService emailService;
+
+    private static final String SUBJECT = "Tasks: New Trello card";
 
 
     public List<TrelloBoardDto> fetchTrelloBoards()

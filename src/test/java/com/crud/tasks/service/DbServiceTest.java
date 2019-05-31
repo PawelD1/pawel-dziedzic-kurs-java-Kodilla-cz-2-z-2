@@ -59,6 +59,17 @@ public class DbServiceTest {
         assertNull(findingTaskById);
     }
 
+    @Test
+    public void getTaskById()
+    {
+        Task task=new Task(1L,"task","content");
+        List<Task> tasks=new ArrayList<>();
+        tasks.add(task);
+        when(taskRepository.findOne(1L)).thenReturn(task);
+        Task findTaskById=dbService.getTaskById(1L);
+        assertEquals(task,findTaskById);
+    }
+
 
     @Test
     public void shouldShowSaveTask() {
