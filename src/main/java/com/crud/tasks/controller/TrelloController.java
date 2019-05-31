@@ -16,44 +16,6 @@ public class TrelloController {
 
     @Autowired
     private TrelloFacade trelloFacade;
-    //private TrelloClient trelloClient;
-    //private TrelloService trelloService;
-
-//    @RequestMapping(method = RequestMethod.GET, value = "getTrelloBoards")
-//    public void getTrelloBoards() {
-//
-//        List<TrelloBoardDto> trelloBoards = trelloClient.getTrelloBoardsPublic();
-//
-//        trelloBoards.stream()
-//                .filter(t -> t.getId() != null && t.getName() != null && t.getName().contains("Kodilla"))
-//
-//                .forEach(trelloBoardDto -> {
-//                    System.out.println(trelloBoardDto.getName()+"-"+trelloBoardDto.getId());
-//                    trelloBoardDto.getLists().forEach(trelloList -> System.out.println(trelloList.getName() + " - " + trelloList.getId() + " - " + trelloList.isClosed()));
-//
-//
-//                });
-//    }
-//    @RequestMapping(method=RequestMethod.GET, value="getTrelloBoards")
-//    public List<TrelloBoardDto> getTrelloBoards()
-//    {
-//        return trelloClient.getTrelloBoardsPublic();
-//    }
-//    @RequestMapping(method=RequestMethod.POST, value="createTrelloCard")
-//    public CreatedTrelloCard createTrelloCard(@RequestBody TrelloCardDto trelloCardDto)
-//    {
-//        return trelloClient.createNewCard(trelloCardDto);
-//    }
-//        @RequestMapping(method=RequestMethod.GET, value="/getTrelloBoards")
-//    public List<TrelloBoardDto> getTrelloBoards()
-//    {
-//        return trelloService.fetchTrelloBoards();
-//    }
-//    @RequestMapping(method=RequestMethod.POST, value="/createTrelloCard")
-//    public CreatedTrelloCard createTrelloCard(@RequestBody TrelloCardDto trelloCardDto)
-//    {
-//        return trelloService.createdTrelloCard(trelloCardDto);
-//    }
 
     @RequestMapping(method=RequestMethod.GET, value="/boards")
     public List<TrelloBoardDto> getTrelloBoards()

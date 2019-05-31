@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 import static org.springframework.util.MimeTypeUtils.APPLICATION_JSON_VALUE;
+
 @CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/v1")
@@ -43,13 +44,4 @@ public class TaskController {
     public void createTask(@RequestBody TaskDto taskDto) {
         service.saveTask(taskMapper.mapToTask(taskDto));
     }
-
-
-//    @RequestMapping(method = RequestMethod.GET, value = "/tasks/{taskId}")
-//    public TaskDto getTaskById(final Long id) {
-//        return taskMapper.mapToTaskDto(service.getTaskById(id));
-//    }
-    //heroku6&
-
-
 }
