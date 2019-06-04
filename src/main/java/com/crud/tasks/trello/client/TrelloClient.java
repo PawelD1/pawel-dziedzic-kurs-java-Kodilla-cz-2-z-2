@@ -67,5 +67,4 @@ public class TrelloClient {
         System.out.println(url);
         return restTemplate.postForObject(url, null, CreatedTrelloCardDto.class);
     }
-
 }
